@@ -42,4 +42,32 @@ in this program we achive this action by using the poMatch function which takes 
 
 ## Testing
 
+to test simply enter test data when prompted by the program
+possible test data that can be used bellow (please note errors may occur if copyed directly to comandline)
+```bash
+> regular expresion :c.a.t
+> string to match :Cat
+> expected result :true
+```
+```bash
+> regular expresion :(h.a)*
+> string to match :hahahahaha
+> expected result :true
+```
+```bash
+> regular expresion :(c.a.t)|(b.a.t)
+> string to match : bat
+> expected result : true
+```
+```bash
+> regular expresion :(t.o.m.m.y)|(b.i.l.l)
+> string to match : bill
+> expected result : true
+```
+```bash
+> regular expresion :(h.a)*
+> string to match :hahah
+> expected result :false
+```
+
 ## References
