@@ -18,8 +18,42 @@ func main() {
 
 }
 
+func postfixToNfa(postfix string) *nfa {
+	nfaStack := []*nfa{}
+	for_,r:=pofix{
+		switch r{
+		case'.':
+			frag2:=nfaStack[len(nfaStack)-1]
+			nfaStack=nfaStack[:len(nfaStack)-1]
+			frag1:=nfaStack[len(nfaStack)-1]
+			nfaStack=nfaStack[:len(nfaStack)-1]
+
+			frag1.accept.edge1=frag2.initial
+			nfaStack = append(nfaStack,&nfa{initial: frag1.initial,accept:frag2.accept})
+
+		case'|':
+			frag2:=nfaStack[len(nfaStack)-1]
+			nfaStack=nfaStack[:len(nfaStack)-1]
+			frag1:=nfaStack[len(nfaStack)-1]
+			nfaStack=nfaStack[:len(nfaStack)-1]
+			
+			initial := state{edge1:frag1.initial,edge2:frag2.initial}
+			accept := state{}
+			frag1.accept.edge1 = &accept
+			frag2.accept.edge1 = &accept
+			
+			nfaStack = append(nfaStack,&nfa{initial: &initial,accept:&accept})
+		case'*':
+		default:
+		}
+	}
+
+	//check only one
+	return nfaStack[0]
+}
+
 //converts infix expresion to postfix expresion using the shunting yard algorithm
-func inFixToPostFix(infix string)string
+func infixToPostfix(infix string)string
 {
 specials := map[rune]int{'*':10, '.':9,'|':8} //map of runes giving order of precedance to these special characters
 postfix := []rune{} // array of runes that will end up as the postfix notation 
