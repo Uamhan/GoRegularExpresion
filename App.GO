@@ -2,28 +2,36 @@ package main
 
 import "fmt"
 
+//state struct which contains a symbol of type rune and two pointers for edges
 type state struct {
 	symbol rune
 	edge1  *state
 	edge2  *state
 }
 
+//nfa stuct which has a pointer to the start and end of the nfa
 type nfa struct {
 	initial *state
 	accept  *state
 }
 
+//main method
 func main() {
 	nfa := postfixToNfa("ab.c*|")
 	fmt.Println(nfa)
 }
 
+//postfix notation is used to create a NFA
 func postfixToNfa(postfix string) *nfa {
+	//stack of nfa pointers
 	nfaStack := []*nfa{}
-
+	//for loop that loops through each rune of the function input
 	for _, r := range postfix {
+		//switch statement for each rune that handles . | * seperately than everything else
 		switch r {
+
 		case '.':
+			//pops two fragments off of the stack concatentates the two and addes it back onto the stack
 			frag2 := nfaStack[len(nfaStack)-1]
 			nfaStack = nfaStack[:len(nfaStack)-1]
 			frag1 := nfaStack[len(nfaStack)-1]
@@ -33,6 +41,8 @@ func postfixToNfa(postfix string) *nfa {
 			nfaStack = append(nfaStack, &nfa{initial: frag1.initial, accept: frag2.accept})
 
 		case '|':
+			//pops two fragments off the stack creates a new initial state from frag1 and 2's initial states
+			//creates an empty accept state  then adds a point to these new values to the stack
 			frag2 := nfaStack[len(nfaStack)-1]
 			nfaStack = nfaStack[:len(nfaStack)-1]
 			frag1 := nfaStack[len(nfaStack)-1]
@@ -44,7 +54,12 @@ func postfixToNfa(postfix string) *nfa {
 			frag2.accept.edge1 = &accept
 
 			nfaStack = append(nfaStack, &nfa{initial: &initial, accept: &accept})
+
 		case '*':
+			//pops 1 fragment off the stack creates and empty accept state
+			//creates a new initial state with edge1 being the frag initial
+			//state and edge 2 being a referance to the new accept state
+			//then appends a pointer to a nfa with these new values to the stack
 			frag := nfaStack[len(nfaStack)-1]
 			nfaStack = nfaStack[:len(nfaStack)-1]
 
@@ -55,6 +70,10 @@ func postfixToNfa(postfix string) *nfa {
 
 			nfaStack = append(nfaStack, &nfa{initial: &initial, accept: &accept})
 		default:
+			//creates an empty accept state
+			//creates a new initial state wiht symbol equaling the current rune
+			//and edge 1 equaling the new accept state then appends a pointer to
+			//a new nfa using these new values
 			accept := state{}
 			initial := state{symbol: r, edge1: &accept}
 			nfaStack = append(nfaStack, &nfa{initial: &initial, accept: &accept})
