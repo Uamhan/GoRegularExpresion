@@ -1,3 +1,23 @@
+package main
+import{
+	"fmt"
+}
+
+type state struct{
+	symbol rune
+	edge1 *state
+	edge2 *state
+}
+
+type nfa struct{
+	initial *state
+	accept *state
+}
+
+func main() {
+
+}
+
 //converts infix expresion to postfix expresion using the shunting yard algorithm
 func inFixToPostFix(infix string)string
 {
@@ -45,6 +65,5 @@ for len(stack) >0 {
 return postfix
 }
 
-func main() {
 
-}
+
