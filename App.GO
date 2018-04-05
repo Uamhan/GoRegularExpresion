@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strings"
 )
 
 //state struct which contains a symbol of type rune and two pointers for edges
@@ -21,15 +22,20 @@ type nfa struct {
 
 //main method
 func main() {
+	//creates scanner to take user input
 	scanner := bufio.NewScanner(os.Stdin)
 	fmt.Println("enter you regular expresion (infix notation)  or: |  one or more: * concatonate : .")
 	scanner.Scan()
+	//takes in user input to infix string
 	infix := scanner.Text()
 	fmt.Println("enter string you wish to check against your expresion")
 	scanner.Scan()
+	//takes in user input to checkString string
 	checkString := scanner.Text()
+	//converts the infix notation to postfix notation
 	postfix := infixToPostfix(infix)
-	fmt.Println(poMatch(postfix, checkString))
+	//creates a nfa from postfix and trys to match checkstring with it
+	fmt.Println(poMatch(strings.ToLower(postfix), strings.ToLower(checkString)))
 }
 
 //addes all reachable states from a given state to a state aray
