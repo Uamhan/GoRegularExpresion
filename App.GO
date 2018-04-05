@@ -147,6 +147,7 @@ func postfixToNfa(postfix string) *nfa {
 	}
 
 	//check only one
+
 	return nfaStack[0]
 }
 
