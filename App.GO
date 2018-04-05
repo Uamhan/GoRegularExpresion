@@ -17,8 +17,47 @@ type nfa struct {
 
 //main method
 func main() {
-	nfa := postfixToNfa("ab.c*|")
-	fmt.Println(nfa)
+
+	fmt.Println(poMatch("ab.c*|", "cccc"))
+}
+
+func addState(l []*state, s *state, a *state) []*state {
+	l = append(l, s)
+	if s != a && s.symbol == 0 {
+		l = addState(l, s.edge1, a)
+		if s.edge2 != nil {
+			l = addState(l, s.edge2, a)
+		}
+	}
+	return l
+}
+
+func poMatch(postfix string, s string) bool {
+	isMatch := false
+
+	poNfa := postfixToNfa(postfix)
+	current := []*state{}
+	next := []*state{}
+
+	current = addState(current[:], poNfa.initial, poNfa.accept)
+
+	for _, r := range s {
+		for _, c := range current {
+			if c.symbol == r {
+				next = addState(next[:], c.edge1, poNfa.accept)
+			}
+		}
+		current, next = next, []*state{}
+	}
+
+	for _, c := range current {
+		if c == poNfa.accept {
+			isMatch = true
+			break
+		}
+	}
+
+	return isMatch
 }
 
 //postfix notation is used to create a NFA
