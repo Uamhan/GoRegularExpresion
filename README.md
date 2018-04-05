@@ -71,5 +71,5 @@ possible test data that can be used bellow (please note errors may occur if copy
 ```
 
 ## References
-Ian Mcloughlin's video tutorials on regular expresions and nfa's https://github.com/ianmcloughlin
-Regular Expression Matching Can Be Simple And Fast by Russ Cox https://swtch.com/~rsc/regexp/regexp1.html
+##### Ian Mcloughlin's video tutorials on regular expresions and nfa's https://github.com/ianmcloughlin
+##### Regular Expression Matching Can Be Simple And Fast by Russ Cox https://swtch.com/~rsc/regexp/regexp1.html
