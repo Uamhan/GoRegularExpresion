@@ -45,29 +45,31 @@ in this program we achive this action by using the poMatch function which takes 
 to test simply enter test data when prompted by the program
 possible test data that can be used bellow (please note errors may occur if copyed directly to comandline)
 ```bash
-> regular expresion :c.a.t
-> string to match :Cat
-> expected result :true
+> regular expresion : c.a.t
+> string to match : Cat
+> expected result : true
 ```
 ```bash
-> regular expresion :(h.a)*
-> string to match :hahahahaha
-> expected result :true
+> regular expresion : (h.a)*
+> string to match : hahahahaha
+> expected result : true
 ```
 ```bash
-> regular expresion :(c.a.t)|(b.a.t)
+> regular expresion : (c.a.t)|(b.a.t)
 > string to match : bat
 > expected result : true
 ```
 ```bash
-> regular expresion :(t.o.m.m.y)|(b.i.l.l)
+> regular expresion : (t.o.m.m.y)|(b.i.l.l)
 > string to match : bill
 > expected result : true
 ```
 ```bash
-> regular expresion :(h.a)*
-> string to match :hahah
-> expected result :false
+> regular expresion : (h.a)*
+> string to match : hahah
+> expected result : false
 ```
 
 ## References
+Ian Mcloughlin's video tutorials on regular expresions and nfa's https://github.com/ianmcloughlin
+Regular Expression Matching Can Be Simple And Fast by Russ Cox https://swtch.com/~rsc/regexp/regexp1.html
