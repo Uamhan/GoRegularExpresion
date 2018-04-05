@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"bufio"
+	"fmt"
+	"os"
+)
 
 //state struct which contains a symbol of type rune and two pointers for edges
 type state struct {
@@ -17,8 +21,15 @@ type nfa struct {
 
 //main method
 func main() {
-
-	fmt.Println(poMatch("ab.c*|", "cccc"))
+	scanner := bufio.NewScanner(os.Stdin)
+	fmt.Println("enter you regular expresion (infix notation)  or: |  one or more: * concatonate : .")
+	scanner.Scan()
+	infix := scanner.Text()
+	fmt.Println("enter string you wish to check against your expresion")
+	scanner.Scan()
+	checkString := scanner.Text()
+	postfix := infixToPostfix(infix)
+	fmt.Println(poMatch(postfix, checkString))
 }
 
 //addes all reachable states from a given state to a state aray
