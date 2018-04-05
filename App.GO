@@ -21,6 +21,8 @@ func main() {
 	fmt.Println(poMatch("ab.c*|", "cccc"))
 }
 
+//addes all reachable states from a given state to a state aray
+//recursive function to navigate through all choices
 func addState(l []*state, s *state, a *state) []*state {
 	l = append(l, s)
 	if s != a && s.symbol == 0 {
@@ -32,25 +34,33 @@ func addState(l []*state, s *state, a *state) []*state {
 	return l
 }
 
+//function that trys to match regular expresion with a string
 func poMatch(postfix string, s string) bool {
+	//sets isMatch to false by default
 	isMatch := false
-
+	//using the postfixTonNfa function we get the nfa of the input
 	poNfa := postfixToNfa(postfix)
+	//initialise current and next nfa pointer arrays
 	current := []*state{}
 	next := []*state{}
-
+	//sets current to out helper function add state
 	current = addState(current[:], poNfa.initial, poNfa.accept)
-
+	//loops through each rune in the input string
 	for _, r := range s {
+		//loops through each nfa pointer in current
 		for _, c := range current {
+			//if the symbol of the current nfa point equals the rune r
+			//we set next to equal our add state function with the inputs below
 			if c.symbol == r {
 				next = addState(next[:], c.edge1, poNfa.accept)
 			}
 		}
+		//we set the current to = next and the next to equal a blank pointer array
 		current, next = next, []*state{}
 	}
-
+	//loops through each nfa pointer in current
 	for _, c := range current {
+		// if the current state is equal to the accept state of the nfa is match is set to true
 		if c == poNfa.accept {
 			isMatch = true
 			break
